@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Anong Meron?</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="Icon/AnongMeron.png"
+    >
+
+</head>
+
+
+<body>
+<!-- =========================================
+     MAINTENANCE SCREEN
+========================================= -->
+
+<div
+    id="maintenance-screen"
+    class="maintenance-screen"
+    style="display: none;"
+>
+
+    <div class="maintenance-content">
+
+        <div class="maintenance-icon">
+            🔧
+        </div>
+
+        <h1>
+            Under Maintenance
+        </h1>
+
+        <p>
+            Anong Meron? is currently under maintenance.
+        </p>
+
+        <span>
+            Please check back later.
+        </span>
+
+        <button
+    type="button"
+    class="maintenance-logout-button"
+    onclick="maintenanceLogout()"
+>
+    LOG OUT
+</button>
+
+    </div>
+
+</div>
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <img
+            src="Icon/AnongMeron.png"
+            alt="Anong Meron? Logo"
+        >
+
+        <h1>
+            Anong Meron?
+        </h1>
+
+    </div>
+
+
+    <div class="customer-header-actions">
+
+        <div class="customer-user-name">
+
+            <span>👤</span>
+
+            <span id="customer-name">
+                Employee
+            </span>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="customer-logout-button"
+            onclick="logoutCustomer()"
+        >
+            Logout
+        </button>
+
+
+        <button
+            type="button"
+            class="cart-button"
+            onclick="showCart()"
+        >
+
+            🛒
+
+            <span id="cart-count">
+                0
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main>
+
+
+<!-- =========================================
+     WELCOME
+========================================= -->
+
+<section class="welcome">
+
+    <p class="small-text">
+        Good morning! 👋
+    </p>
+
+    <h2>
+        Anong Meron Today?
+    </h2>
+
+    <p>
+        Check out what's available and satisfy your cravings.
+    </p>
+
+</section>
+
+
+
+<!-- =========================================
+     CATEGORIES
+========================================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>
+            Categories
+        </h2>
+
+    </div>
+
+
+    <div class="categories">
+
+
+        <!-- VIEW ALL -->
+
+        <button
+            type="button"
+            class="category active"
+            onclick="showCategory('all', this)"
+        >
+
+            <span>
+                📋
+            </span>
+
+            <p>
+                View All
+            </p>
+
+        </button>
+
+
+
+        <!-- ALMUSAL -->
+
+        <button
+            type="button"
+            class="category"
+            onclick="showCategory('almusal', this)"
+        >
+
+            <span>
+                🍳
+            </span>
+
+            <p>
+                Almusal
+            </p>
+
+        </button>
+
+
+
+        <!-- MERYENDA -->
+
+        <button
+            type="button"
+            class="category"
+            onclick="showCategory('meryenda', this)"
+        >
+
+            <span>
+                🥤
+            </span>
+
+            <p>
+                Meryenda
+            </p>
+
+        </button>
+
+
+
+        <!-- ULAM -->
+
+        <button
+            type="button"
+            class="category"
+            onclick="showCategory('ulam', this)"
+        >
+
+            <span>
+                🍱
+            </span>
+
+            <p>
+                Ulam
+            </p>
+
+        </button>
+
+
+
+        <!-- DESSERTS -->
+
+        <button
+            type="button"
+            class="category"
+            onclick="showCategory('desserts', this)"
+        >
+
+            <span>
+                🍰
+            </span>
+
+            <p>
+                Desserts
+            </p>
+
+        </button>
+
+
+
+        <!-- OTHERS -->
+
+        <button
+            type="button"
+            class="category"
+            onclick="showCategory('others', this)"
+        >
+
+            <span>
+                📦
+            </span>
+
+            <p>
+                Others
+            </p>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ALMUSAL
+========================================= -->
+
+<section
+    class="section category-section"
+    id="category-almusal"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Almusal
+        </h2>
+
+        <span>
+            Available Today
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="admin-added-almusal-products"
+    >
+
+        <div class="empty-category">
+
+            <p>
+                There are no products available in this category yet.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     MERYENDA
+========================================= -->
+
+<section
+    class="section category-section"
+    id="category-meryenda"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Meryenda
+        </h2>
+
+        <span>
+            Available Today
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="admin-added-meryenda-products"
+    >
+
+        <div class="empty-category">
+
+            <p>
+                There are no products available in this category yet.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ULAM
+========================================= -->
+
+<section
+    class="section category-section"
+    id="category-ulam"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Ulam
+        </h2>
+
+        <span>
+            Today's Special
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="admin-added-ulam-products"
+    >
+
+        <div class="empty-category">
+
+            <p>
+                There are no ulam available today.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     DESSERTS
+========================================= -->
+
+<section
+    class="section category-section"
+    id="category-desserts"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Desserts
+        </h2>
+
+        <span>
+            Available Today
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="admin-added-desserts-products"
+    >
+
+        <div class="empty-category">
+
+            <p>
+                There are no desserts available today.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     OTHERS
+========================================= -->
+
+<section
+    class="section category-section"
+    id="category-others"
+>
+
+    <div class="section-title">
+
+        <h2>
+            Others
+        </h2>
+
+        <span>
+            Available Products
+        </span>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="admin-added-products"
+    >
+
+        <div class="empty-category">
+
+            <p>
+                There are no products available in this category yet.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     CART
+========================================= -->
+
+<section
+    class="cart-section"
+    id="cart-section"
+>
+
+    <div id="cart-content">
+
+
+        <!-- CART TITLE -->
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Your Cart
+                </h2>
+
+                <span>
+                    Review your order
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CART ITEMS -->
+
+        <div id="cart-items">
+
+            <!-- Cart items will be rendered by script.js -->
+
+        </div>
+
+
+
+        <!-- CART SUMMARY -->
+
+        <div class="cart-summary">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cart-total">
+                ₱0
+            </strong>
+
+        </div>
+
+
+
+        <!-- =====================================
+             CART ACTIONS
+        ====================================== -->
+
+        <div class="cart-actions">
+
+            <!-- CHECKOUT ONLY -->
+
+            <button
+                type="button"
+                class="checkout-button"
+                onclick="showCheckout()"
+            >
+                CHECKOUT
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     CHECKOUT
+========================================= -->
+
+<section id="checkout-section" class="checkout-section">
+
+    <div class="checkout-header">
+       
+
+        <div>
+            <h2>Checkout</h2>
+            <p>Review your order before placing it.</p>
+        </div>
+    </div>
+
+
+    <!-- ORDER SUMMARY -->
+    <div class="checkout-card">
+
+        <div class="checkout-card-header">
+            <div>
+                <h3>Order Summary</h3>
+                <p>Your selected items</p>
+            </div>
+        </div>
+
+        <div id="checkout-items" class="checkout-items">
+            <!-- Items will be generated by JavaScript -->
+        </div>
+
+        <div class="checkout-total">
+            <span>Total</span>
+            <strong id="checkout-total">₱0.00</strong>
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMER INFORMATION -->
+    <div class="checkout-card">
+
+        <div class="checkout-card-header">
+            <div>
+                <h3>Customer Information</h3>
+                <p>Confirm your details</p>
+            </div>
+        </div>
+
+
+        <div class="checkout-form">
+
+    <!-- EMPLOYEE NAME -->
+
+    <div class="checkout-field">
+
+        <label>
+            Employee Name
+        </label>
+
+        <input
+            type="text"
+            id="checkout-name"
+            readonly
+        >
+
+    </div>
+
+
+    <!-- DEPARTMENT -->
+
+    <div class="checkout-field">
+
+        <label>
+            Department
+        </label>
+
+        <input
+            type="text"
+            id="checkout-department"
+            readonly
+        >
+
+    </div>
+
+
+    <!-- PAYMENT METHOD -->
+
+    <div class="checkout-field">
+
+        <label for="payment-method">
+            Payment Method
+        </label>
+
+        <select id="payment-method">
+
+            <option value="">
+                Select payment method
+            </option>
+
+            <option value="Cash">
+                Cash
+            </option>
+
+            <option value="GCash">
+                GCash
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+    <!-- ACTION BUTTONS -->
+    <div class="checkout-actions">
+
+        <button
+            type="button"
+            onclick="placeOrder()"
+            class="checkout-button"
+        >
+            PLACE ORDER
+        </button>
+
+
+        <button
+            type="button"
+            onclick="orderMore()"
+            class="order-more-button"
+        >
+            ORDER MORE
+        </button>
+
+
+        <button
+            type="button"
+            onclick="cancelOrder()"
+            class="cancel-button"
+        >
+            CANCEL
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ORDER CONFIRMATION
+========================================= -->
+
+<section
+    class="confirmation-section"
+    id="confirmation-section"
+>
+
+    <div class="confirmation-card">
+
+        <!-- ICON -->
+
+        <div class="confirmation-icon">
+            ✓
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h2>
+            Order Confirmed!
+        </h2>
+
+
+        <p>
+            Your order has been successfully placed.
+        </p>
+
+
+        <!-- ORDER NUMBER -->
+
+        <div class="order-number">
+
+            Order #
+
+            <span id="order-number">
+                0000
+            </span>
+
+        </div>
+
+
+        <!-- ORDERED ITEMS -->
+
+        <div class="confirmation-items">
+
+            <h3>
+                Ordered Items
+            </h3>
+
+            <div id="confirmation-items">
+                <!-- Items will be generated by script.js -->
+            </div>
+
+        </div>
+
+
+        <!-- CONFIRMATION DETAILS -->
+
+        <div class="confirmation-details">
+
+            <!-- EMPLOYEE -->
+
+            <div>
+
+                <span>
+                    Employee
+                </span>
+
+                <strong id="confirm-name">
+                </strong>
+
+            </div>
+
+
+            <!-- DEPARTMENT -->
+
+            <div>
+
+                <span>
+                    Department
+                </span>
+
+                <strong id="confirm-department">
+                </strong>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div>
+
+                <span>
+                    Payment
+                </span>
+
+                <strong id="confirm-payment">
+                </strong>
+
+            </div>
+
+
+            <!-- TOTAL -->
+
+            <div>
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="confirm-total">
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- BACK TO HOME -->
+
+        <button
+            type="button"
+            class="home-button"
+            onclick="backToHome()"
+        >
+            BACK TO HOME
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ORDER HISTORY
+========================================= -->
+
+<section
+    class="order-history-section"
+    id="order-history-section"
+>
+
+    <div class="section-title">
+
+
+        <div>
+
+            <h2>
+                Order History
+            </h2>
+
+            <span>
+                Your previous orders
+            </span>
+
+        </div>
+
+
+
+        <!-- DELETE ALL -->
+
+        <button
+            type="button"
+            class="delete-all-orders-button"
+            onclick="deleteAllOrderHistory()"
+        >
+            DELETE ALL
+        </button>
+
+
+    </div>
+
+
+
+    <div id="order-history-list">
+
+        <!-- Orders will be loaded here by script.js -->
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     BOTTOM NAVIGATION
+========================================= -->
+
+<nav class="bottom-nav">
+
+
+    <!-- =====================================
+         HOME
+    ====================================== -->
+
+    <button
+        type="button"
+        class="nav-item active"
+        id="home-nav-button"
+        onclick="goToHome()"
+    >
+
+        <span>
+            🏠
+        </span>
+
+        <small>
+            Home
+        </small>
+
+    </button>
+
+
+
+    <!-- =====================================
+         HISTORY
+    ====================================== -->
+
+    <button
+        type="button"
+        class="nav-item"
+        id="history-nav-button"
+        onclick="showOrderHistory()"
+    >
+
+        <span>
+            🧾
+        </span>
+
+        <small>
+            History
+        </small>
+
+    </button>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     AUTH SCRIPT
+========================================= -->
+
+<!-- =========================================
+     SUPABASE
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="./supabase.js"></script>
+
+
+<!-- =========================================
+     AUTH SCRIPT
+========================================= -->
+<script src="./auth.js"></script>
+
+<script src="./app-modal.js"></script>
+
+
+<script>
+
+    /*
+     * ========================================
+     * CHECK CUSTOMER LOGIN
+     * ========================================
+     */
+
+    const currentUser = getCurrentUser();
+
+
+    if (
+        !currentUser ||
+        currentUser.role !== "customer"
+    ) {
+
+        window.location.href = "login.html";
+
+    }
+
+
+    /*
+     * ========================================
+     * DISPLAY CUSTOMER NAME
+     * ========================================
+     */
+
+    if (currentUser) {
+
+        const customerName =
+            document.getElementById("customer-name");
+
+
+        if (customerName) {
+
+            customerName.textContent =
+                currentUser.fullName ||
+                currentUser.username;
+
+        }
+
+
+        /*
+         * ====================================
+         * AUTO-FILL EMPLOYEE INFORMATION
+         * ====================================
+         */
+
+        const employeeName =
+            document.getElementById("checkout-name");
+
+
+        const department =
+            document.getElementById("checkout-department");
+
+
+        if (
+            employeeName &&
+            currentUser.fullName
+        ) {
+
+            employeeName.value =
+                currentUser.fullName;
+
+        }
+
+
+        if (
+            department &&
+            currentUser.department
+        ) {
+
+            department.value =
+                currentUser.department;
+
+        }
+
+    }
+
+
+    /*
+     * ========================================
+     * CUSTOMER LOGOUT
+     * ========================================
+     */
+
+    async function logoutCustomer() {
+
+        const confirmLogout =
+            await appConfirm(
+                "Are you sure you want to logout?",
+                "Logout"
+            );
+
+
+        if (!confirmLogout) {
+
+            return;
+
+        }
+
+
+        await logoutUser();
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+</script>
+
+
+<!-- =========================================
+     TEST SCRIPT
+========================================= -->
+
+<script>
+
+    console.log(
+        "INDEX HTML SCRIPT TEST"
+    );
+
+</script>
+
+
+
+<!-- =========================================
+     MAIN APP SCRIPT
+========================================= -->
+
+<script src="./script.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+<title>Anong Meron? - Invitation Codes</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link
+    rel="icon"
+    type="image/png"
+    href="Icon/AnongMeron.png"
+>
+
+</head>
+
+<body class="admin-body">
+
+<main>
+
+<section class="admin-dashboard">
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="admin-header">
+
+
+<div class="admin-brand">
+
+    <div class="admin-logo">
+
+        <img
+            src="Icon/AnongMeron.png"
+            alt="Anong Meron?"
+        >
+
+    </div>
+
+    <div>
+
+        <h1>
+            Anong Meron?
+        </h1>
+
+        <p>
+            Company Store
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="admin-user-area">
+
+    <div class="admin-label">
+        ADMIN
+    </div>
+
+    <button
+        class="admin-logout-button"
+        onclick="logoutInvitationAdmin()"
+    >
+        Logout
+    </button>
+
+</div>
+
+
+</header>
+
+<!-- =========================================
+     PAGE TITLE
+========================================= -->
+
+<div class="admin-title">
+
+
+<h2>
+    Invitation Codes
+</h2>
+
+<p>
+    Manage access codes for selected employees
+</p>
+
+
+<button
+    class="add-menu-button invitation-generate-button"
+    onclick="generateInvitationCode()"
+>
+    🔑 Generate New Code
+</button>
+
+
+</div>
+
+<!-- =========================================
+     ACTIVE CODES
+========================================= -->
+
+<section class="invitation-section">
+
+
+<div class="section-heading">
+
+    <div>
+
+        <h2>
+            Available Codes
+        </h2>
+
+        <p>
+            These codes can still be used for registration.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div id="active-invitation-codes">
+
+    <!-- Codes will appear here -->
+
+</div>
+
+
+</section>
+
+<!-- =========================================
+     USED CODES
+========================================= -->
+
+<section class="invitation-section">
+
+
+<div class="section-heading">
+
+    <div>
+
+        <h2>
+            Used Codes
+        </h2>
+
+        <p>
+            These codes have already been assigned to an account.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div id="used-invitation-codes">
+
+    <!-- Used codes will appear here -->
+
+</div>
+
+
+</section>
+
+<!-- =========================================
+     DISABLED CODES
+========================================= -->
+
+<section class="invitation-section">
+
+
+<div class="section-heading">
+
+    <div>
+
+        <h2>
+            Disabled Codes
+        </h2>
+
+        <p>
+            These codes can no longer be used.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div id="disabled-invitation-codes">
+
+    <!-- Disabled codes will appear here -->
+
+</div>
+
+
+</section>
+
+<!-- =========================================
+     BACK TO DASHBOARD
+========================================= -->
+
+<div class="invitation-back">
+
+
+<a
+    href="admin.html"
+    class="add-menu-button"
+>
+    ← Back to Admin Dashboard
+</a>
+
+
+</div>
+
+</section>
+
+</main>
+
+<!-- =========================================
+     SUPABASE
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<!-- =========================================
+     AUTH
+========================================= -->
+
+<script src="auth.js"></script>
+
+<!-- SHARED APP MODAL -->
+
+<script src="app-modal.js"></script>
+
+<script>
+
+    /*
+     * Check admin access.
+     */
+
+    const invitationAdmin =
+        getCurrentUser();
+
+
+    if (
+        !invitationAdmin ||
+        invitationAdmin.role !== "admin"
+    ) {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+
+    /*
+     * Logout admin.
+     */
+
+    async function logoutInvitationAdmin() {
+
+        const confirmLogout =
+            await appConfirm(
+                "Are you sure you want to logout?",
+                "Logout"
+            );
+
+
+        if (!confirmLogout) {
+
+            return;
+
+        }
+
+
+        await logoutUser();
+
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+</script>
+
+<!-- =========================================
+     INVITATION JAVASCRIPT
+========================================= -->
+
+<script src="invitation.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Create Account - Anong Meron?</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="Icon/AnongMeron.png"
+>
+
+
+</head>
+
+<body class="auth-page">
+
+
+<div class="auth-container register-container">
+
+    <!-- LOGO -->
+
+    <div class="auth-logo">
+
+        <img
+            src="Icon/AnongMeron.png"
+            alt="Anong Meron?"
+        >
+
+    </div>
+
+
+    <h1>Create Account</h1>
+
+    <p class="auth-subtitle">
+        Employee Registration
+    </p>
+
+
+    <!-- REGISTRATION FORM -->
+
+    <form id="registerForm">
+
+
+        <!-- FULL NAME -->
+
+        <div class="auth-input-group">
+
+            <label for="fullName">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                required
+            >
+
+        </div>
+
+
+        <!-- EMPLOYEE ID -->
+
+        <div class="auth-input-group">
+
+            <label for="employeeId">
+                Employee ID
+            </label>
+
+            <input
+                type="text"
+                id="employeeId"
+                placeholder="Enter your employee ID"
+                required
+            >
+
+        </div>
+
+
+        <!-- DEPARTMENT -->
+
+        <div class="auth-input-group">
+
+            <label for="department">
+                Department
+            </label>
+
+            <input
+                type="text"
+                id="department"
+                placeholder="Enter your department"
+                required
+            >
+
+        </div>
+
+
+        <!-- USERNAME -->
+
+        <div class="auth-input-group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Create a username"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="auth-input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+            >
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="auth-input-group">
+
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Re-enter your password"
+                autocomplete="new-password"
+                required
+            >
+
+        </div>
+
+
+        <!-- INVITATION CODE -->
+
+        <div class="auth-input-group">
+
+            <label for="invitationCode">
+                Invitation Code
+            </label>
+
+           <input
+    type="text"
+    id="invitationCode"
+    placeholder="AM2026ABC1234"
+    maxlength="14"
+    autocomplete="off"
+    required
+>
+
+            <small class="invitation-help">
+                An invitation code is required to create an account.
+            </small>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <p
+            id="registerMessage"
+            class="auth-message"
+        ></p>
+
+
+        <!-- REGISTER BUTTON -->
+
+        <button
+            type="submit"
+            class="auth-submit-button"
+            id="registerButton"
+        >
+            Create Account
+        </button>
+
+    </form>
+
+
+    <!-- LOGIN LINK -->
+
+    <div class="auth-register-link">
+
+        <span>
+            Already have an account?
+        </span>
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     SUPABASE
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+
+<!-- =========================================
+     AUTH
+========================================== -->
+
+<script src="auth.js"></script>
+
+<!-- SHARED APP MODAL -->
+
+<script src="app-modal.js"></script>
+
+
+<script>
+// ==========================================
+// INVITATION CODE AUTO FORMAT
+// ==========================================
+document
+    .getElementById("invitationCode")
+    .addEventListener(
+        "input",
+        function() {
+
+            // Remove hyphens and other characters
+            let value =
+                this.value
+                    .toUpperCase()
+                    .replace(/[^A-Z0-9]/g, "");
+
+            // Actual invitation code is 11 characters:
+            // AM2026ABC123
+            value =
+                value.substring(0, 12);
+
+            // Format:
+            // AM-2026-ABC123
+
+            let formatted =
+                value;
+
+            if (value.length > 2) {
+
+                formatted =
+                    value.substring(0, 2) +
+                    "-" +
+                    value.substring(2);
+
+            }
+
+            if (value.length > 6) {
+
+                formatted =
+                    value.substring(0, 2) +
+                    "-" +
+                    value.substring(2, 6) +
+                    "-" +
+                    value.substring(6);
+
+            }
+
+            this.value =
+                formatted;
+
+        }
+    );
+    // ==========================================
+    // IF ALREADY LOGGED IN
+    // ==========================================
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (currentUser) {
+
+        if (
+            currentUser.role === "admin"
+        ) {
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+
+        if (
+            currentUser.role === "customer"
+        ) {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    }
+
+
+    // ==========================================
+    // REGISTRATION
+    // ==========================================
+
+    document
+        .getElementById("registerForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const fullName =
+                    document
+                        .getElementById("fullName")
+                        .value;
+
+
+                const employeeId =
+                    document
+                        .getElementById("employeeId")
+                        .value;
+
+
+                const department =
+                    document
+                        .getElementById("department")
+                        .value;
+
+
+                const username =
+                    document
+                        .getElementById("username")
+                        .value;
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const confirmPassword =
+                    document
+                        .getElementById("confirmPassword")
+                        .value;
+
+
+                const invitationCode =
+                    document
+                        .getElementById("invitationCode")
+                        .value;
+
+
+                const message =
+                    document
+                        .getElementById(
+                            "registerMessage"
+                        );
+
+
+                const registerButton =
+                    document
+                        .getElementById(
+                            "registerButton"
+                        );
+
+
+                // ==================================
+                // CHECK PASSWORD
+                // ==================================
+
+                if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    message.textContent =
+                        "Passwords do not match.";
+
+                    message.className =
+                        "auth-message error";
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // DISABLE BUTTON
+                // ==================================
+
+                registerButton.disabled =
+                    true;
+
+                registerButton.textContent =
+                    "Creating Account...";
+
+                message.textContent =
+                    "";
+
+
+                // ==================================
+                // REGISTER
+                // ==================================
+
+                try {
+
+                    const result =
+                        await registerCustomer(
+                            fullName,
+                            employeeId,
+                            department,
+                            username,
+                            password,
+                            invitationCode
+                        );
+
+
+                    // ==================================
+                    // SUCCESS
+                    // ==================================
+
+                    if (
+                        result.success
+                    ) {
+
+                        message.textContent =
+                            "Account created successfully! Redirecting to login...";
+
+                        message.className =
+                            "auth-message success";
+
+
+                        document
+                            .getElementById(
+                                "registerForm"
+                            )
+                            .reset();
+
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "login.html";
+
+                            },
+                            1200
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    // ==================================
+                    // ERROR
+                    // ==================================
+
+                    message.textContent =
+                        result.message;
+
+                    message.className =
+                        "auth-message error";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+
+                    message.textContent =
+                        "Unable to create account. Please try again.";
+
+                    message.className =
+                        "auth-message error";
+
+                }
+
+
+                // ==================================
+                // ENABLE BUTTON AGAIN
+                // ==================================
+
+                registerButton.disabled =
+                    false;
+
+                registerButton.textContent =
+                    "Create Account";
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>

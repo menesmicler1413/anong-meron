@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Manage Today's Menu - Anong Meron?</title>
+
+<link
+    rel="stylesheet"
+    href="./style.css"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="Icon/AnongMeron.png"
+>
+
+<style>
+
+    /* =========================
+       MENU MODAL
+    ========================= */
+
+    .menu-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .menu-modal-card {
+        width: 100%;
+        max-width: 550px;
+        max-height: 90vh;
+        overflow-y: auto;
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow:
+            0 20px 50px
+            rgba(0, 0, 0, 0.25);
+    }
+
+    .menu-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .menu-modal-header h2 {
+        margin: 0 0 5px;
+    }
+
+    .menu-modal-header p {
+        margin: 0;
+        color: #777;
+    }
+
+    .modal-close {
+        border: none;
+        background: #f1f1f1;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .menu-modal-card label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+
+    .menu-modal-card input,
+    .menu-modal-card select,
+    .menu-modal-card textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 15px;
+        font-family: inherit;
+    }
+
+    .menu-modal-card textarea {
+        min-height: 90px;
+        resize: vertical;
+    }
+
+    .menu-modal-card input:focus,
+    .menu-modal-card select:focus,
+    .menu-modal-card textarea:focus {
+        outline: none;
+        border-color: #888;
+    }
+
+    .menu-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .menu-modal-actions button {
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .cancel-menu-button {
+        background: #eeeeee;
+    }
+
+    .save-menu-button {
+        background: #222;
+        color: white;
+    }
+
+    .save-menu-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .empty-menu {
+        text-align: center;
+        padding: 40px 20px;
+        color: #777;
+    }
+
+    .empty-menu p {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .empty-menu span {
+        font-size: 14px;
+    }
+
+    .no-menu-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+        font-size: 40px;
+    }
+
+    /* =========================
+       IMAGE PREVIEW
+    ========================= */
+
+    #image-preview-container {
+        margin-top: 10px;
+    }
+
+    #menu-image-preview {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+    }
+
+</style>
+
+
+</head>
+
+<body class="admin-body menu-page">
+
+<section class="admin-dashboard">
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="admin-header">
+
+    <div class="admin-brand">
+
+        <div class="admin-logo">
+            <img
+                src="Icon/AnongMeron.png"
+                alt="Anong Meron?"
+            >
+        </div>
+
+        <div>
+
+            <h1>
+                Anong Meron?
+            </h1>
+
+            <p>
+                Company Store
+            </p>
+
+        </div>
+
+    </div>
+
+    <span class="admin-label">
+        ADMIN
+    </span>
+
+</div>
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<div class="dashboard-title">
+
+    <div>
+
+        <h2>
+            Manage Today's Menu
+        </h2>
+
+        <p>
+            Add, edit, or update the products available today.
+        </p>
+
+    </div>
+
+    <button
+        type="button"
+        class="add-menu-button"
+        id="add-product-button"
+    >
+        + Add Product
+    </button>
+
+</div>
+
+
+<!-- =========================
+     MENU LIST
+========================= -->
+
+<section class="menu-management">
+
+    <div class="menu-section-header">
+
+        <h3>
+            Today's Products
+        </h3>
+
+        <span id="menu-count">
+            0 Products
+        </span>
+
+    </div>
+
+    <div id="menu-list">
+        <!-- Products appear here -->
+    </div>
+
+</section>
+
+
+<!-- =========================
+     BACK TO DASHBOARD
+========================= -->
+
+<button
+    type="button"
+    class="back-dashboard-button"
+    onclick="window.location.href='admin.html'"
+>
+    ← Back to Dashboard
+</button>
+
+
+</section>
+
+<!-- =========================
+     ADD / EDIT PRODUCT MODAL
+========================= -->
+
+<div
+    class="menu-modal"
+    id="menu-modal"
+>
+
+
+<div class="menu-modal-card">
+
+    <!-- MODAL HEADER -->
+
+    <div class="menu-modal-header">
+
+        <div>
+
+            <h2 id="modal-title">
+                Add Product
+            </h2>
+
+            <p>
+                Enter the product information below.
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            class="modal-close"
+            id="close-menu-modal"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <!-- PRODUCT NAME -->
+
+    <label for="menu-name">
+        Product Name
+    </label>
+
+    <input
+        type="text"
+        id="menu-name"
+        placeholder="Example: Chicken Adobo"
+    >
+
+
+    <!-- PRODUCT IMAGE -->
+
+    <label for="menu-image">
+        Product Image
+    </label>
+
+    <input
+        type="file"
+        id="menu-image"
+        accept="image/*"
+    >
+
+
+    <!-- IMAGE PREVIEW -->
+
+    <div
+        id="image-preview-container"
+        style="display: none;"
+    >
+
+        <img
+            id="menu-image-preview"
+            src=""
+            alt="Product Preview"
+        >
+
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <label for="menu-category">
+        Category
+    </label>
+
+    <select id="menu-category">
+
+        <option value="almusal">
+            Almusal
+        </option>
+
+        <option value="meryenda">
+            Meryenda
+        </option>
+
+        <option value="ulam">
+            Ulam
+        </option>
+
+        <option value="desserts">
+            Desserts
+        </option>
+
+        <option value="others">
+            Others
+        </option>
+
+    </select>
+
+
+    <!-- PRICE -->
+
+    <label for="menu-price">
+        Price
+    </label>
+
+    <input
+        type="number"
+        id="menu-price"
+        placeholder="Example: 60"
+        min="0"
+        step="0.01"
+    >
+
+
+    <!-- DESCRIPTION -->
+
+    <label for="menu-description">
+        Description
+    </label>
+
+    <textarea
+        id="menu-description"
+        placeholder="Short description of the product"
+    ></textarea>
+
+
+    <!-- BUTTONS -->
+
+    <div class="menu-modal-actions">
+
+        <button
+            type="button"
+            class="cancel-menu-button"
+            id="cancel-menu-button"
+        >
+            Cancel
+        </button>
+
+        <button
+            type="button"
+            class="save-menu-button"
+            id="save-menu-button"
+        >
+            Save Product
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<div
+    id="save-notification"
+    class="save-notification"
+>
+
+
+<span>✓</span>
+
+<span id="save-notification-text">
+    Product saved successfully!
+</span>
+
+
+</div>
+
+<!-- =========================================
+     SUPABASE
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="./supabase.js"></script>
+
+<script src="./auth.js"></script>
+
+<script src="./app-modal.js"></script>
+
+<!-- =========================================
+     ADMIN ACCESS
+========================================= -->
+
+<script>
+
+    const menuAdmin =
+        getCurrentUser();
+
+    if (
+        !menuAdmin ||
+        menuAdmin.role !== "admin"
+    ) {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+</script>
+
+<!-- =========================================
+     MENU JAVASCRIPT
+========================================= -->
+
+<script src="./menu.js"></script>
+
+</body>
+</html>

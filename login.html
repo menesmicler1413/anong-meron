@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Login - Anong Meron?</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="Icon/AnongMeron.png"
+>
+
+
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+
+<!-- LOGO -->
+
+<div class="auth-logo">
+
+    <img
+        src="Icon/AnongMeron.png"
+        alt="Anong Meron?"
+    >
+
+</div>
+
+
+<h1>
+    Anong Meron?
+</h1>
+
+
+<p class="auth-subtitle">
+    Company Food Ordering
+</p>
+
+
+<!-- ============================= -->
+<!-- LOGIN -->
+<!-- ============================= -->
+
+<div id="login-form-container">
+
+    <h2>
+        Login
+    </h2>
+
+
+    <form id="loginForm">
+
+
+        <!-- USERNAME -->
+
+        <div class="auth-input-group">
+
+            <label for="loginUsername">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="loginUsername"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="auth-input-group">
+
+            <label for="loginPassword">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <label class="show-password-label">
+
+                <input
+                    type="checkbox"
+                    onclick="togglePassword('loginPassword')"
+                >
+
+                Show password
+
+            </label>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <p
+            id="loginMessage"
+            class="auth-message"
+        ></p>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+            type="submit"
+            class="auth-submit-button"
+            id="loginButton"
+        >
+            Login
+        </button>
+
+
+    </form>
+
+
+    <!-- REGISTER -->
+
+    <div class="auth-register-link">
+
+        <span>
+            Don't have an account?
+        </span>
+
+        <a href="register.html">
+            Create Account
+        </a>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- ========================================== -->
+
+<!-- SCRIPTS -->
+
+<!-- ========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script src="auth.js"></script>
+
+<script src="app-modal.js"></script>
+
+<script>
+
+/* =========================================================
+   SHOW / HIDE PASSWORD
+   ========================================================= */
+
+function togglePassword(inputId) {
+
+    const passwordInput =
+        document.getElementById(inputId);
+
+
+    if (!passwordInput) {
+        return;
+    }
+
+
+    if (
+        passwordInput.type ===
+        "password"
+    ) {
+
+        passwordInput.type =
+            "text";
+
+    } else {
+
+        passwordInput.type =
+            "password";
+
+    }
+
+}
+
+
+/* =========================================================
+   UNIFIED LOGIN
+   ========================================================= */
+
+document.getElementById(
+    "loginForm"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document.getElementById(
+                "loginUsername"
+            ).value.trim();
+
+
+        const password =
+            document.getElementById(
+                "loginPassword"
+            ).value;
+
+
+        const message =
+            document.getElementById(
+                "loginMessage"
+            );
+
+
+        const button =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        message.textContent =
+            "Logging in...";
+
+
+        message.className =
+            "auth-message";
+
+
+        button.disabled =
+            true;
+
+
+        try {
+
+            /*
+             * ==========================================
+             * ADMIN LOGIN
+             *
+             * Existing admin accounts use their
+             * email address as the username.
+             * ==========================================
+             */
+
+            if (
+                username.includes("@")
+            ) {
+
+                try {
+
+                    const adminUser =
+                        await loginAdmin(
+                            username,
+                            password
+                        );
+
+
+                    if (
+                        adminUser &&
+                        adminUser.role === "admin"
+                    ) {
+
+                        message.textContent =
+                            "Login successful!";
+
+
+                        message.className =
+                            "auth-message success";
+
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "admin.html";
+
+                            },
+                            500
+                        );
+
+
+                        return;
+
+                    }
+
+                } catch (adminError) {
+
+                    /*
+                     * If the email is not an admin,
+                     * continue and try customer login.
+                     */
+
+                    console.log(
+                        "Admin login not successful. Trying customer login."
+                    );
+
+                }
+
+            }
+
+
+            /*
+             * ==========================================
+             * CUSTOMER LOGIN
+             * ==========================================
+             */
+
+            const result =
+                await loginCustomer(
+                    username,
+                    password
+                );
+
+
+            if (
+                result &&
+                result.success
+            ) {
+
+                message.textContent =
+                    "Login successful!";
+
+
+                message.className =
+                    "auth-message success";
+
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "index.html";
+
+                    },
+                    500
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+             * ==========================================
+             * INVALID LOGIN
+             * ==========================================
+             */
+
+            message.textContent =
+                (
+                    result &&
+                    result.message
+                ) ||
+                "Incorrect username or password.";
+
+
+            message.className =
+                "auth-message error";
+
+
+            button.disabled =
+                false;
+
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            message.textContent =
+                error.message ||
+                "Unable to login. Please try again.";
+
+
+            message.className =
+                "auth-message error";
+
+
+            button.disabled =
+                false;
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

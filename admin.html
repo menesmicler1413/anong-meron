@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Anong Meron? - Admin Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="admin-body">
+
+
+    <main>
+
+        <section class="admin-dashboard">
+
+
+            <!-- =========================
+                 ADMIN HEADER
+            ========================== -->
+
+            <header class="admin-header">
+
+                <div class="admin-brand">
+
+                    <img
+                        src="Icon/AnongMeron.png"
+                        alt="Anong Meron? Logo"
+                        class="admin-logo-image"
+                    >
+
+                    <div class="admin-title">
+                        Hello Admin!
+                    </div>
+
+                </div>
+
+
+                <div class="admin-user-area">
+
+                    <div class="admin-account">
+
+                        <div class="admin-avatar">
+                            M
+                        </div>
+
+                        <div class="admin-account-text">
+
+                            <strong>
+                                Micler T. Menes
+                            </strong>
+
+                            <span>
+                                <span>
+                                    Store Manager
+                                </span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="admin-logout-button"
+                        onclick="logoutAdmin()"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================
+                 DASHBOARD INTRO
+            ========================== -->
+
+            <section class="admin-welcome">
+
+                <div>
+
+                    <h1>
+                        Order Dashboard
+                    </h1>
+
+                    <p>
+                        Manage your company store, products, and customer orders.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SUMMARY CARDS
+            ========================== -->
+
+            <section class="admin-summary">
+
+
+                <!-- PENDING -->
+
+                <div class="summary-card pending-card">
+
+                    <div class="summary-icon">
+                        📦
+                    </div>
+
+                    <div class="summary-content">
+
+                        <div class="summary-label">
+                            Pending Orders
+                        </div>
+
+                        <div
+                            class="summary-number"
+                            id="pending-count"
+                        >
+                            0
+                        </div>
+
+                        <div class="summary-description">
+                            Orders waiting to be completed
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COMPLETED -->
+
+                <div class="summary-card completed-card">
+
+                    <div class="summary-icon">
+                        ✅
+                    </div>
+
+                    <div class="summary-content">
+
+                        <div class="summary-label">
+                            Completed Orders
+                        </div>
+
+                        <div
+                            class="summary-number"
+                            id="completed-count"
+                        >
+                            0
+                        </div>
+
+                        <div class="summary-description">
+                            Successfully completed orders
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SALES -->
+
+                <div class="summary-card sales-card">
+
+                    <div class="summary-icon">
+                        💰
+                    </div>
+
+                    <div class="summary-content">
+
+                        <div class="summary-label">
+                            Today's Sales
+                        </div>
+
+                        <div
+                            class="summary-number"
+                            id="today-sales"
+                        >
+                            ₱0.00
+                        </div>
+
+                        <div class="summary-description">
+                            Total completed sales today
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =========================
+                 QUICK MANAGEMENT
+            ========================== -->
+
+            <section class="quick-management">
+
+                <div class="admin-section-heading">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            QUICK MANAGEMENT
+                        </span>
+
+                        <h2>
+                            Store Management
+                        </h2>
+
+                        <p>
+                            Quickly access the tools you use most.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="management-grid">
+
+
+                    <!-- TODAY'S MENU -->
+
+                    <a
+                        href="menu.html"
+                        class="management-card"
+                    >
+
+                        <div class="management-icon">
+                            🍽️
+                        </div>
+
+                        <div class="management-info">
+
+                            <h3>
+                                Today's Menu
+                            </h3>
+
+                            <p>
+                                Add, edit, and manage the products available today.
+                            </p>
+
+                            <span class="management-link">
+                                Manage Menu →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- INVITATION CODES -->
+
+                    <a
+                        href="invitation.html"
+                        class="management-card"
+                    >
+
+                        <div class="management-icon">
+                            🔑
+                        </div>
+
+                        <div class="management-info">
+
+                            <h3>
+                                Invitation Codes
+                            </h3>
+
+                            <p>
+                                Create and manage access codes for selected employees.
+                            </p>
+
+                            <span class="management-link">
+                                Manage Codes →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 MAINTENANCE MODE
+            ========================== -->
+
+            <section class="maintenance-section">
+
+                <div class="maintenance-card">
+
+                    <div class="maintenance-info">
+
+                        <span class="section-eyebrow">
+                            APP CONTROL
+                        </span>
+
+                        <h2>
+                            Maintenance Mode
+                        </h2>
+
+                        <p id="maintenance-status">
+                            Checking status...
+                        </p>
+
+                    </div>
+
+
+                    <label class="maintenance-switch">
+
+                        <input
+                            type="checkbox"
+                            id="maintenance-toggle"
+                            onchange="toggleMaintenanceMode()"
+                        >
+
+                        <span class="maintenance-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 CUSTOMER ORDERS
+            ========================== -->
+
+            <section class="orders-section">
+
+                <div class="admin-section-heading orders-heading">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            ORDER MANAGEMENT
+                        </span>
+
+                        <h2>
+                            Customer Orders
+                        </h2>
+
+                        <p>
+                            Monitor and process today's customer orders.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="order-search-wrapper">
+
+                    <span class="order-search-icon">
+                        🔎
+                    </span>
+
+                    <input
+                        type="text"
+                        id="order-search"
+                        placeholder="Search customer or order number..."
+                    >
+
+                </div>
+
+
+                <!-- FILTER BUTTONS -->
+
+                <div class="order-filter-buttons">
+
+                    <button
+                        class="order-filter active"
+                        data-filter="pending"
+                    >
+                        📦 Pending
+                    </button>
+
+
+                    <button
+                        class="order-filter"
+                        data-filter="completed"
+                    >
+                        ✅ Completed
+                    </button>
+
+                </div>
+
+
+                <!-- PENDING ORDERS -->
+
+                <div
+                    id="pending-orders"
+                    class="admin-orders-container"
+                >
+                </div>
+
+
+                <!-- COMPLETED ORDERS -->
+
+                <div
+                    id="completed-orders"
+                    class="admin-orders-container"
+                    style="display:none;"
+                >
+                </div>
+
+
+                <!-- CLEAR COMPLETED -->
+
+                <button
+                    class="clear-completed-button"
+                    onclick="clearCompletedOrders()"
+                >
+                    🗑️ Clear Completed Orders
+                </button>
+
+            </section>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+
+            <footer class="admin-footer">
+
+                <span>
+                    Anong Meron? Company Store
+                </span>
+
+                <span>
+                    Admin Panel
+                </span>
+
+            </footer>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         SUPABASE
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+
+    <!-- =========================
+         AUTH
+    ========================== -->
+
+    <script src="auth.js"></script>
+
+
+    <!-- =========================
+         APP MODAL
+    ========================== -->
+
+    <script src="app-modal.js"></script>
+
+
+    <!-- =========================
+         ADMIN ACCESS PROTECTION
+    ========================== -->
+
+    <script>
+
+        const currentAdmin = getCurrentUser();
+
+        if (
+            !currentAdmin ||
+            currentAdmin.role !== "admin"
+        ) {
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+
+    </script>
+
+
+    <!-- =========================
+         ADMIN LOGOUT
+    ========================== -->
+
+    <script>
+
+        async function logoutAdmin() {
+
+            const confirmLogout =
+                await appConfirm(
+                    "Are you sure you want to logout?",
+                    "Logout"
+                );
+
+
+            if (!confirmLogout) {
+                return;
+            }
+
+
+            await logoutUser();
+
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    </script>
+
+
+    <!-- =========================
+         ADMIN JAVASCRIPT
+    ========================== -->
+
+    <script src="admin.js"></script>
+
+
+</body>
+
+</html>
+
