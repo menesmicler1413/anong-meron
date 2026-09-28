@@ -10,7 +10,7 @@
     "icons": [
         {
             "src": "./Icon/AnongMeron.png",
-            "sizes": "760x762",
+            "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         }
